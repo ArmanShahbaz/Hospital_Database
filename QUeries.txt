@@ -1,0 +1,94 @@
+CREATE TABLE Departments (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL UNIQUE,
+    Room_no VARCHAR(10) NOT NULL
+);
+
+
+CREATE TABLE Doctors (
+    DoctorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Specialization VARCHAR(100) NOT NULL,
+    Phone VARCHAR(15) UNIQUE NOT NULL,
+    DepartmentID INT NOT NULL,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+
+CREATE TABLE Patients (
+    PatientID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    Gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    Phone VARCHAR(15) UNIQUE NOT NULL,
+    DepartmentID INT NOT NULL,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+
+CREATE TABLE Appointments (
+    AppointmentID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT NOT NULL,
+    DoctorID INT NOT NULL,
+    Date DATE NOT NULL,
+    Time TIME NOT NULL,
+    Status ENUM('Scheduled', 'Completed', 'Cancelled') NOT NULL,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+-- Insert data into Departments table
+INSERT INTO Departments (DepartmentID, Name, Room_no) VALUES
+(1, 'Cardiology', 'A101'),
+(2, 'Neurology', 'B201'),
+(3, 'Orthopedics', 'C301'),
+(4, 'Pediatrics', 'D401'),
+(5, 'Oncology', 'E501'),
+(6, 'Dermatology', 'F601'),
+(7, 'Gastroenterology', 'G701'),
+(8, 'Urology', 'H801'),
+(9, 'ENT', 'I901'),
+(10, 'General Medicine', 'J1001');
+
+-- Insert data into Doctors table
+INSERT INTO Doctors (DoctorID, Name, Specialization, Phone, DepartmentID) VALUES
+(1, 'Dr. Alice Smith', 'Cardiologist', '1234567890', 1),
+(2, 'Dr. Bob Johnson', 'Neurologist', '1234567891', 2),
+(3, 'Dr. Charlie Brown', 'Orthopedic', '1234567892', 3),
+(4, 'Dr. Diana Prince', 'Pediatrician', '1234567893', 4),
+(5, 'Dr. Evan Taylor', 'Oncologist', '1234567894', 5),
+(6, 'Dr. Fiona Green', 'Dermatologist', '1234567895', 6),
+(7, 'Dr. George King', 'Gastroenterologist', '1234567896', 7),
+(8, 'Dr. Hannah White', 'Urologist', '1234567897', 8),
+(9, 'Dr. Ian Black', 'ENT Specialist', '1234567898', 9),
+(10, 'Dr. Jack Grey', 'General Practitioner', '1234567899', 10);
+
+-- Insert data into Patients table
+INSERT INTO Patients (PatientID, Name, Age, Gender, Phone, DepartmentID) VALUES
+(1, 'John Doe', 30, 'Male', '9876543210', 1),
+(2, 'Jane Roe', 25, 'Female', '9876543211', 2),
+(3, 'Jim Bean', 40, 'Male', '9876543212', 3),
+(4, 'Jill Hill', 35, 'Female', '9876543213', 4),
+(5, 'Joe Lake', 50, 'Male', '9876543214', 5),
+(6, 'Jenny Field', 20, 'Female', '9876543215', 6),
+(7, 'James Brown', 60, 'Male', '9876543216', 7),
+(8, 'Jessica Blue', 28, 'Female', '9876543217', 8),
+(9, 'Jordan Green', 45, 'Male', '9876543218', 9),
+(10, 'Joy Gold', 55, 'Female', '9876543219', 10);
+
+-- Insert data into Appointments table
+INSERT INTO Appointments (AppointmentID, PatientID, DoctorID, Date, Time, Status) VALUES
+(1, 1, 1, '2024-12-22', '10:00:00', 'Scheduled'),
+(2, 2, 2, '2024-12-22', '11:00:00', 'Scheduled'),
+(3, 3, 3, '2024-12-23', '09:00:00', 'Completed'),
+(4, 4, 4, '2024-12-23', '10:30:00', 'Cancelled'),
+(5, 5, 5, '2024-12-24', '13:00:00', 'Scheduled'),
+(6, 6, 6, '2024-12-24', '14:00:00', 'Scheduled'),
+(7, 7, 7, '2024-12-25', '15:00:00', 'Completed'),
+(8, 8, 8, '2024-12-25', '16:00:00', 'Cancelled'),
+(9, 9, 9, '2024-12-26', '09:30:00', 'Scheduled'),
+(10, 10, 10, '2024-12-26', '10:30:00', 'Scheduled');
+
+
+
+-- The ER Diagram is created using --->>>> dbdiagram.io  <<<<---
